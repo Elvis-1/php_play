@@ -29,7 +29,7 @@ Objects or entities should be open for extension but closed for modification.
 
 // Our aim here is to allow extension but avoid modifications to any class
 
-// Inorder to ensure that all shapes provided have area method since we want to make area unique to each because all shapes have different areas, we create an interface and an exception class.
+// Inorder to ensure that all shapes provided have area method since we want to make area unique to each shape(object) because all shapes have different areas, we create an interface and an exception class.
 
  interface ShapeArea{
   public function area();
@@ -47,7 +47,7 @@ class Square implements ShapeArea
    
     public function area()
     {
-      $area = $shape->length * $shape->length;
+      $area = $this->length * $this->length;
       return $area;
     }
     
@@ -62,7 +62,7 @@ class Circle implements ShapeArea{
     }
     public function area()
     {
-      $area = pi() * ($shape->radius * $shape->radius);
+      $area = pi() * ($this->radius * $this->radius);
        return $area;
     }
 }
@@ -83,8 +83,7 @@ class AreaSumCalculator{
       foreach($this->shapes as $shape)
       {
 
-           
-        
+           $area[] = $shape->area();  
       }
       return array_sum($area);
     }
@@ -109,13 +108,15 @@ class AreaSumCalculatorOutput{
     }
 }
 
-// create objects (instance of classes)
+// create shapes or objects (instance of classes)
 $circle = new Circle(10);
 $square = new Square(5);
 
-// create a shape variable to accept an array of shapes (object created)
-$shapes = [$circle,$square];
-//print_r($shapes);
+
+// create a shape variable to accept an array of the area of shapes (object created)
+
+$shapes = [$circle, $square];
+
 // calculate the sum of the areas of the shapes
 $area_sum_calculator = new AreaSumCalculator($shapes);
 
@@ -126,7 +127,7 @@ $area_sum_output = new AreaSumCalculatorOutput($area_sum_calculator);
 // call the output
 $json_output = $area_sum_output->jsonOutput();
 
-//echo $json_output;
+echo $json_output;
 
 
 
