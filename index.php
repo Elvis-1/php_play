@@ -299,7 +299,7 @@ function myplusMinus($arr) {
     }
 
     $final = number_format($z,$a,'.');
-    echo $final;
+    return $final;
 
   }
   print($ratio_of_positive);
@@ -308,67 +308,44 @@ function myplusMinus($arr) {
 
 
 }
-myplusMinus(array(-4, 3, -9, 0, 4, 1));
+//myplusMinus(array(-4, 3, -9, 0, 4, 1));
 
 
 //===================//
 
-// You can use this. Removal of addition digits after 6th decimal digit.
-$z = 99.000001111;  
-$y = $z * 10000000 / 10000000;
-//echo $y;
+// ====================//
 
-//Then to calculate amount of digits after decimal remaining.
+// A stair case challenge
 
-$str = "$y";
-$get_digits_from_dot = strrchr($str, ".");
-//echo $get_digits_from_dot;
-$remove_dot = substr($get_digits_from_dot,1);
-// echo $remove_dot;
-$check_length_of_string = strlen($remove_dot);
-//echo $check_length_of_string;
-//$dcount = strlen(substr(strrchr($str, "."), 1));
-//Now we have to determine if the value should have decimals or not and if so , need to have 2 or more decimals.
+// function staircase($n)
+// {
+//   for($i = 0; $i<$n; $i++)
+//   {
+  
+//     for($j=0; $j<$n-$j-1; $j++)
+//     {
+//       print(" ");
+//     }
+   
+//     for($k = $i; $k>=0; $k--)
+//     {
+//       printf("#");
+//     }
+//     printf("\n");
 
-$a = 0; 
-If ($check_length_of_string == 1) 
-{$a = $check_length_of_string+5;
-} 
-else {
-  $a = $check_length_of_string;
-  $a = 6;
-} 
-$x = number_format((float)$y, $a, '.', '');
-//echo $x;
+//   }
+// }
 
-function plusMinusVersionTwo($arr)
+//  staircase(10);
+
+$arr = [3,3,4,5,6,7,8];
+// for($i=0; $i< count($arr); $i++)
+// {
+//   echo $i;
+// }
+for($i=count($arr); $i >= 0; $i--)
 {
-  $n = count($arr);
-  $positive = 0;
-  $negative = 0;
-  $zero = 0;
-  for($i = 0; $i < $n; $i++)
-  {
-      if($arr[$i] > -1 && $arr[$i] != 0)
-      {
-          $positive +=1;
-      }
-      
-      if($arr[$i] < 1 && $arr[$i] != 0)
-      {
-          $negative += 1;
-      }
-      if($arr[$i] == 0)
-      {
-          $zero += 1;
-      }
-  }
-
-$a = 6;
-
-  print(number_format($positive/$n, $a, '.', ''));
-  // print(number_format( $negative/$n, $a, '.', ''));
-  // print(number_format( $zero/$n, $a, '.', ''));
+  echo $i;
 }
 
-plusMinusVersionTwo(array(-4, 3, -9, 0, 4, 1));
+
