@@ -343,9 +343,49 @@ $arr = [3,3,4,5,6,7,8];
 // {
 //   echo $i;
 // }
-for($i=count($arr); $i >= 0; $i--)
-{
-  echo $i;
+// for($i=count($arr); $i >= 0; $i--)
+// {
+//   echo $i;
+// }
+$n = 1;
+$f = [0,1];
+
+
+// function stair($n)
+// {
+// for($i = 0; $i<$n; $i++){
+//      for($j=0; $j<$n-$j-1; $j++)
+//     {
+//       print("");
+//     }  
+//   for($j = $i; $j>=0; $j-- ){
+         
+//     // print('#'); 
+
+//      print("#". "\n" );
+//   }
+
+//   for($j = $n-$i-1; $j<$n; $j++ ){
+         
+//     print('#');  print("\n");
+//  }
+ // print("\n");
+//   echo "<br>";
+// }
+// }
+
+//stair(6);
+
+$arr1 = [[2,3,4,5],[7,7,7,7],[8,8,8,8]];
+
+$arr2 = [2,3,4,5];
+
+for($i = 0; $i < count($arr2); $i++){
+    print($arr2[$i]);
 }
+
+$i = 0;
+$position = $n-1;
+
 
 

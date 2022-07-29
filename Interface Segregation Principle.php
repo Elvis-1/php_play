@@ -1,18 +1,19 @@
 <?php
 
-// THIRD 'SOLID' principle
+// FOURTH 'SOLID' principle
 
 /*
-Liskov Substitution Principle states:
 
-Let q(x) be a property provable about objects of x of type T. Then q(y) should be provable for objects y of type S where S is a subtype of T.
+Interface Segregation Principle
 
-This means that every subclass or derived class should be substitutable for their base or parent class.
+Interface Segregation Principle states:
+
+A client should never be forced to implement an interface that it doesn’t use, or clients shouldn’t be forced to depend on methods they do not use.
 
 */
 
 
-// V=(a)^3 == cube
+// lets do a little modification. Paradventure, we want to calculate surface area and volume of solid shapes. For type-hint, we will create another interface to return a particular, so that all shapes created will be forced to return thesesame type
 
    // to constrain all shapes to use area method, we create an interface
 interface ShapeArea{
@@ -23,9 +24,15 @@ interface ShapeArea{
 
    interface SolidVolume{
      public function volume();
+     
    }
 
- // create an exception incase if the shape or the volume doe not implement area or volume method
+   interface ManageAllShapes{
+    
+    public function calculate():float;
+   }
+
+ // create an exception incase if the shape or the volume does not implement the methods available
  
  class NotValidShapeException extends Exception{
     
@@ -42,7 +49,7 @@ interface ShapeArea{
   }
  }
 
- class Cone implements SolidVolume{
+ class Cone implements ShapeArea, SolidVolume, ManageAllShapes{
 // V=π(r)^2 * h/3 = cone
 
     private $radius;
@@ -57,13 +64,28 @@ interface ShapeArea{
     {
       $volume = pi()* pow($this->radius,2) * ($this->height/3);
      
-             
-              
-      return $volume;
+        return $volume;
+    }
+
+    public function area()
+    {
+     // A=πr(r+h2+r2) -- surface area of a cone
+     
+     $area = pi()* $this->radius *($this->radius + sqrt(pow($this->height,2)+ pow($this->radius,2)));
+
+     return $area;
+     
+    }
+
+    public function calculate():float
+    {
+        $sum = $this->volume() + $this->area();
+
+        return $sum;
     }
  }
 
-  class Square implements ShapeArea
+  class Square implements ShapeArea,ManageAllShapes
   {
       public $length;
   
@@ -77,10 +99,15 @@ interface ShapeArea{
         $area = $this->length * $this->length;
         return $area;
       }
+
+      public function calculate():float
+      {
+        return $this->area();
+      }
       
   }
   
-  class Circle implements ShapeArea{
+  class Circle implements ShapeArea, ManageAllShapes{
       public $radius;
       
        function __construct($radius)
@@ -92,6 +119,13 @@ interface ShapeArea{
         $area = pi() * ($this->radius * $this->radius);
          return $area;
       }
+
+      public function calculate():float
+      {
+        return $this->area();
+      }
+
+
   }
   
   
@@ -109,9 +143,9 @@ interface ShapeArea{
           $area = [];
           foreach($this->shapes as $shape)
           {
-            if(is_a($shape, 'ShapeArea'))
+            if(is_a($shape, 'ManageAllShapes'))
             {
-              $area[] = $shape->area();
+              $area[] = $shape->calculate();
             }else{
               throw new NotValidShapeException($shape);
             }
@@ -153,7 +187,7 @@ interface ShapeArea{
     public $shapes;
     function __construct($shapes = [])
     {
-      parent::__construct($shapes);
+     // parent::__construct($shapes);
 
        $this->shapes = $shapes;
     }
@@ -163,9 +197,9 @@ interface ShapeArea{
       $area = [];
         foreach($this->shapes as $shape)
         {
-          if(is_a($shape, 'SolidVolume'))
+          if(is_a($shape, 'ManageAllShapes'))
           {
-            $area[] = $shape->volume();
+            $area[] = $shape->calculate();
           }else{
             throw new NotValidShapeException($shape);
           }
@@ -192,29 +226,29 @@ interface ShapeArea{
   
 // Example 1
 
-  // try{
-  // // calculate the sum of the areas of the shapes
-  // $area_sum_calculator = new AreaSumCalculator($plane_shapes);
+  try{
+  // calculate the sum of the areas of the shapes
+  $area_sum_calculator = new AreaSumCalculator($plane_shapes);
 
  
-  //   // output the sum
+    // output the sum
   
-  //   $area_sum_output = new AreaSumCalculatorOutput($area_sum_calculator);
+    $area_sum_output = new AreaSumCalculatorOutput($area_sum_calculator);
 
-  //     // call the output
-  // $json_output = $area_sum_output->jsonOutput();
+      // call the output
+  $json_output = $area_sum_output->jsonOutput();
  
-  // //echo $json_output;  
+  echo $json_output;  
 
-  // /*{
-  //   "sum": 339.1592653589793
-  // }*/
+  /*{
+    "sum": 339.1592653589793
+  }*/
 
-  // }catch(NotValidShapeException $e)
-  // {
-  //  // echo 'wrong';
-  //  echo $e->message();
-  // }
+  }catch(NotValidShapeException $e)
+  {
+   // echo 'wrong';
+   echo $e->message();
+  }
 
 // Example 2
 
