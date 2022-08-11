@@ -28,8 +28,7 @@ interface ShapeArea{
    }
 
    interface ManageAllShapes{
-    
-    public function calculate():float;
+     public function calculate():float;
    }
 
  // create an exception incase if the shape or the volume does not implement the methods available
@@ -238,7 +237,7 @@ interface ShapeArea{
       // call the output
   $json_output = $area_sum_output->jsonOutput();
  
-  echo $json_output;  
+  //echo $json_output;  
 
   /*{
     "sum": 339.1592653589793

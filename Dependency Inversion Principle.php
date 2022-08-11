@@ -136,7 +136,7 @@ class Button implements ButtonInterface{
 
     public function buttonState()
     {   
-        //echo 'got here';
+    //echo 'got here';
         return $this->lamp->getCurrentState();
     }
 }

@@ -189,7 +189,7 @@ echo $json_output .'<br>';
 
 }catch(InvalideShapeException $e)
 {
-  echo "Caught my exception\n";
+  echo "Caught my exception: \n ";
   echo $e->getMyMessage();
 
 }
@@ -213,7 +213,7 @@ $area_sum_output = new AreaSumCalculatorOutput($area_sum_calculator);
 
 $json_output = $area_sum_output->jsonOutput();
 
-echo $json_output;
+//echo $json_output;
 
 }catch(InvalideShapeException $e)
 {
