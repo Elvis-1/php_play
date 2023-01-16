@@ -70,8 +70,8 @@ Abstractions should not depend on details, details should depend on abstractions
 // To ensure that the button class does not depend on the light buld, we create interface
 
 interface LightInterface{
-    public function turnOn();
-    public function turnOff();
+    public function lightOn();
+    public function lightOff();
 }
 
 interface ButtonInterface{
@@ -81,42 +81,31 @@ interface ButtonInterface{
 
 
 class LightBulb implements LightInterface{
-    protected bool $currentState =false;
+    protected $currentState =false;
 
- public function turnOn()
+    public function lightOn()
     {
-        $this->currentState = true;
+       return $this->currentState = true;
     }
-    public function turnOff()
+    public function lightOff()
     {
-        $this->currentState = false;
+       return $this->currentState = false;
     }
 
-    public function getCurrentState():string
+    public function getCurrentState()
     {
-        if($this->currentState)
-        {
-            return 'on';
-        }else{
-            return 'off';
-        }
-       
+         if($this->currentState)
+         {
+            return 'On';
+         }
+         return 'Off';
     }
+
+   
 }
 
-class States{
-    private LightBulb $states;
-
-    function __construct($states)
-    {
-$this->states = $states;
-    }
-
-    
-}
-
-
-class Button implements ButtonInterface{
+class Button  
+{
     public LightInterface $lamp;
 
     function __construct(LightInterface $lamp)
@@ -126,27 +115,81 @@ class Button implements ButtonInterface{
 
     public function buttonOn()
     {
-       return $this->lamp->turnOn();
+       return $this->lamp->lightOn();
     }
 
     public function buttonOff()
     {
-        return $this->lamp->turnOff();
+        return $this->lamp->lightOff();
     }
 
     public function buttonState()
-    {   
-    //echo 'got here';
+    {
         return $this->lamp->getCurrentState();
     }
+
+   
 }
+
+// class ButtonSwitch implements ButtonInterface{
+//     public function buttonOn()
+//     {
+//        return $this->lamp->lightOn();
+//     }
+
+//     public function buttonOff()
+//     {
+//         return $this->lamp->lightOff();
+//     }
+// }
+
+// class LightBulbState
+// {
+//     protected ButtonInterface $currentState;
+//     function __construct($currentState){
+//         $this->currentState = $currentState;
+//     }
+
+//     public function getCurrentState(){
+//         if($this->currentState->ButtonOn())
+//         {
+//             echo 'On';
+//         }
+//         echo 'Off';
+//     }
+// }
+
+// class LightBulbState{
+//     private LightBulb $states;
+
+//     function __construct($states)
+//     {
+// $this->states = $states;
+//     }
+
+//     public function getCurrentState():string
+//     {
+//         if($this->currentState)
+//         {
+//             return 'on';
+//         }else{
+//             return 'off';
+//         }
+       
+//     }
+// }
+
+
+
 
 
 $bulb = new LightBulb();
 $button = new Button($bulb);
-$button->buttonOn();
+$call_button = $button->buttonOn();
+// $state = new LightBulbState($button->buttonOn());
 //$button->buttonOff();
- echo $button->buttonState();
+ $buttonState = $call_button -> getCurrentState();
+ echo $buttonState;
 
 
 
